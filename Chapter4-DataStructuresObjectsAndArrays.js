@@ -196,6 +196,73 @@ let arrayValue = [1, 2, 3, 4, 5];
 console.log(reverseArrayInPlace(arrayValue));
 
 
+/* SOLUTION TO A LIST */
+
+let list = {
+    value: 1,
+    rest: {
+        value: 2,
+        rest: {
+            value: 3,
+            rest: null
+        }
+    }
+};
+
+console.log(list.rest)
+console.log(list.rest.rest.value);  // 3
+
+function arrayToList(array) {
+    let list = {};
+    for (let i = 0; i < array.length; i++) {
+        list = {value: array[i], rest: list}
+    }
+    return list;
+}
+
+console.log(arrayToList([1, 2, 3]));
+
+
+function deepEqual(val1, val2) {
+    // Deep comparison if typeof is object.
+    if (typeof val1 === "object" && typeof val2 === "object") {
+        // Check if the keys are equal.
+        // If the array of their keys are different they can't be the same.
+        if (Object.keys(val1).length !== Object.keys(val2).length) {
+            console.log("Different amount of keys: ", "Not equal!");
+            return false;
+            // Arrays are the same size.
+        } else {
+            // Get array of sorted keys.
+            val1Keys = Object.keys(val1).sort();
+            val2Keys = Object.keys(val2).sort();
+
+            // Check if the keys are the same.
+            for (let i = 0; i < val1Keys.length; i++) {
+                if (val1Keys[i] !== val2Keys[i]) {
+                    console.log("Different keys: ", "Not equal!");
+                    return false;
+                    // Keys are the same check value.
+                } else {
+                    if (val1[val1Keys[i]] !== val2[val2Keys[i]]) {
+                        console.log("Values are not the same: ", "Not equal!");
+                        return false;
+                    }
+                }
+            }
+        }
+        // Passed all tests return true.
+        console.log("They are the same!");
+        return true;
+    }
+}
+
+deepEqual({name: "Tom", age: 25}, {name: "Sabin", age: 24});
+deepEqual({name: "Tom", age: 25, rest: {name: "Sabin"}}, {name: "Tom", age: 25, rest: {name: "Sabin"}});
+deepEqual({name: "Tom", age: 25}, {name: "Tom", age: 25, height: 69});
+
+
+
 
 
 
