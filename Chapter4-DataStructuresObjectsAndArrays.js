@@ -157,6 +157,7 @@ function rangeEfficient(start, end, step = start > end ? -1 : 1) {
 
 function sum(myArray) {
     let count = 0;
+    console.log(count);
     for (let i of myArray) {
         count += i;
     }
