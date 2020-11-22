@@ -204,62 +204,83 @@ let list = {
         value: 2,
         rest: {
             value: 3,
-            rest: null
+            rest: {
+                value: 4,
+                rest: null
+            }
         }
     }
 };
 
-console.log(list.rest)
-console.log(list.rest.rest.value);  // 3
-
 function arrayToList(array) {
-    let list = {};
+    let myList = {};
     for (let i = 0; i < array.length; i++) {
-        list = {value: array[i], rest: list}
+        myList = { value: array[i], rest: myList }
     }
-    return list;
+    // myList = {value: 1, rest: null}
+    // myList = {value: 2, rest: {value: 1, rest: null}}
+    // myList = {value: 3, {value: 2, rest: {value: 1, rest: null}}
+
+    return myList;
 }
 
 console.log(arrayToList([1, 2, 3]));
 
+function listToArray(list) {
+    let array = [];
+    for (let node = list; node; node = node.rest) {
+        console.log("LIST: ", node);
+        array.push(node.value);
+    }
+    return array;
+}
 
-function deepEqual(val1, val2) {
-    // Deep comparison if typeof is object.
-    if (typeof val1 === "object" && typeof val2 === "object") {
-        // Check if the keys are equal.
-        // If the array of their keys are different they can't be the same.
-        if (Object.keys(val1).length !== Object.keys(val2).length) {
-            console.log("Different amount of keys: ", "Not equal!");
-            return false;
-            // Arrays are the same size.
-        } else {
-            // Get array of sorted keys.
-            val1Keys = Object.keys(val1).sort();
-            val2Keys = Object.keys(val2).sort();
+function prepend(value) {
+    list = { value, rest: list };
+    return list;
+}
 
-            // Check if the keys are the same.
-            for (let i = 0; i < val1Keys.length; i++) {
-                if (val1Keys[i] !== val2Keys[i]) {
-                    console.log("Different keys: ", "Not equal!");
-                    return false;
-                    // Keys are the same check value.
-                } else {
-                    if (val1[val1Keys[i]] !== val2[val2Keys[i]]) {
-                        console.log("Values are not the same: ", "Not equal!");
-                        return false;
-                    }
-                }
-            }
+console.log(prepend(0, list));
+console.log(prepend(5, list));
+
+function nth(list, number) {
+    if (number === 0) return list;
+    currentNode = list;
+    for (let i = 0; i < number; i++) {
+        if (currentNode === null) {
+            console.log(!list);
+            return "No such node.";
         }
-        // Passed all tests return true.
-        console.log("They are the same!");
-        return true;
+        currentNode = currentNode.rest;
+    }
+    return currentNode;
+}
+
+console.log(list);
+console.log(nth(list, 5));
+console.log(nth(list, 6));
+
+function deepEquals(obj1, obj2) {
+    if (typeof obj1 === "object" && typeof obj2 === "object") {
+        console.log("They are objects!");
+        // Check same length of keys.
+        if (Object.keys(obj1).length === Object.keys(obj2).length) {
+            console.log("Keys are the same length!");
+        } else {
+            return "They are not equal! Different amount of keys!";
+        }
+    } else if (obj1 === obj2) {
+        return "They are equal!";
+    } else {
+        return "They are not equal!";
     }
 }
 
-deepEqual({name: "Tom", age: 25}, {name: "Sabin", age: 24});
-deepEqual({name: "Tom", age: 25, rest: {name: "Sabin"}}, {name: "Tom", age: 25, rest: {name: "Sabin"}});
-deepEqual({name: "Tom", age: 25}, {name: "Tom", age: 25, height: 69});
+console.log(deepEquals(list, list));
+
+
+
+
 
 
 
