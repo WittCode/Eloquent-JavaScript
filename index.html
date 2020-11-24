@@ -10,7 +10,17 @@
 <body>
     <script>
 
-        console.log("Test");
+        let myArray = [1, 2, 3];
+        for (let m of myArray) {
+            console.log(m);
+        }
+
+        let newArray = myArray[Symbol.iterator]();
+        console.log(myArray);
+        console.log(newArray);
+        console.log("Symbol.iterator" in newArray);
+
+
 
     </script>
 </body>

@@ -176,7 +176,108 @@ let stringObject = {
 
 console.log(stringObject[toStringSymbol]());
 
+// The object given to a for/of loop is expected to be iterable. This means it has a method named with the Symbol.iterator symbol.
+// In other words, a symbol value defined by the language stored as a property of the Symbol function.
 
 
+let okIterator = "OK"[Symbol.iterator]();
 
+console.log(okIterator.next());
+console.log(okIterator.next());
+console.log(okIterator.next());
+
+
+/* SOLUTION TO A VECTOR TYPE */
+
+class Vec {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    get length() {
+        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+    }
+
+}
+
+Vec.prototype.plus = function(vec2) {
+    return new Vec(this.x + vec2.x, this.y + vec2.y);
+}
+
+Vec.prototype.minus = function(vec2) {
+    return new Vec(this.x - vec2.x, this.y - vec2.y);
+}
+
+let myVec = new Vec(3, 4);
+let myVec2 = new Vec(6, 10);
+console.log(myVec.plus(myVec2));
+console.log(myVec.minus(myVec2));
+console.log(myVec.length);
+
+/* SOLUTION TO GROUPS */
+
+class Group {
+    constructor() {
+        this.members = []
+    }
+
+    add(value) {
+        if (!this.members.includes(value)) this.members.push(value);
+    }
+
+    delete(value) {
+        // If value is included then return a new array.
+        if (this.members.includes(value)) {
+            // Return an array where the  value isn't equal to the given value.
+            this.members = this.members.filter(function(n) {
+               return n !== value;
+            });
+        }
+    }
+
+    has(value) {
+        return this.members.includes(value) ? true : false;
+    }
+
+    static from(myIterable) {
+        let newGroup = new Group();
+        for (let i of myIterable) {
+            newGroup.add(i);
+        }
+        return newGroup;
+    }
+
+
+}
+
+let myGroup = Group.from("Soccer");
+myGroup.add("Soccer");
+myGroup.add(6);
+myGroup.add(6);
+console.log(myGroup);
+myGroup.delete(6);
+myGroup.add(7);
+console.log(myGroup.has(7));
+console.log(myGroup.has(6));
+console.log(myGroup);
+
+// An object is iterable if it implements a function whose key is [Symbol.iterator] and returns and iterator.
+
+let myArray = [1, 2, 3];
+for (let m of myArray) {
+    console.log(m);
+}
+
+let newArray = myArray[Symbol.iterator]();
+console.log("Symbol.iterator" in newArray);
+
+
+/* ITERABLE GROUPS */
+
+class iterableGroup {
+    constructor() {
+        
+    }
+}
 
