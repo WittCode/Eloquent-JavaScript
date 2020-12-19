@@ -28,18 +28,33 @@ fifteen.then(value => console.log(`Got ${value}`));
 
 // A normal value is simply there. A promised value is a value that might already be there or might appear at some point in the future.
 
-function readStorage() {
-    console.log("Reading storage!");
-}
-
 // ES6 introduced promises.
 
-// We use setTimeout() because we are pretending we are dealing with a server.
+// Promise.resolve() returns a resolved promise.
 
-function storage(nest, name) {
+let soccer = Promise.resolve("Soccer");
 
-    // The promise constructor expects a function as an argument, 
-    return new Promise(resolve => {
-        readStorage();
-    });
-}
+soccer.then((data) => {
+    console.log("Resolved.");
+});
+
+// Promise.reject() returns a rejected promise with the reason why it was rejected.
+
+let noSoccer = Promise.reject("I was rejected because I am ugly!");
+
+noSoccer.catch((data) => {
+    console.log(data);
+});
+
+// The then() method returns a promise.
+
+let myPromise = Promise.resolve(10);
+
+console.log(myPromise);
+
+myPromise.then((data) => {
+    console.log(data);
+    return data;
+}).then((data) => {
+    console.log(data);
+});
